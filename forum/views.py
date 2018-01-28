@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .models import UserProfile, Question, Answer, AnswerComment, Vote, Favorite, Domain
 from django.http import HttpResponse
 from django import forms
+import random
 
 
 def login(request):
@@ -201,3 +202,9 @@ def vote(request, pk):
 def thesaurus(request):
     words = request.user.user_profile.favorites.all()
     return render(request, 'forum/mythesaurus.html', {'words': words})
+
+
+def word_of_the_day(request):
+    words = Question.objects.all()
+    word = random.choice(words)
+    return render(request, 'forum/wordoftheday.html', {'word': word})

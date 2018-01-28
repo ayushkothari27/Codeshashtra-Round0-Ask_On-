@@ -14,5 +14,6 @@ urlpatterns = [
     url(r'^questions/(?P<abc>[0-9]+)/favourite/$', views.favourite, name='favourite'),
     url(r'^feed/$', views.feed, name='feed'),
     url(r'^answers/(?P<pk>[0-9]+)/add_comment/$', views.add_comment, name='add_comment'),
-    url(r'^thesaurus/', views.thesaurus, name='thesaurus'),
+    url(r'^thesaurus/$', views.thesaurus, name='thesaurus'),
+    url(r'^wordoftheday/$', views.word_of_the_day, name='word_of_the_day'),
 ]
