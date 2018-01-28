@@ -1,5 +1,9 @@
 <h1>{{ question.question }}</h1>
 <p>{{ question.id }}</p>
+<form action="{% url 'forum:favourite' question.id %}" method="post">
+  {% csrf_token %}
+  <input type="submit" value="Favourite"><br>
+</form>
 
 
 {% for answer in question.question_ans.all %}

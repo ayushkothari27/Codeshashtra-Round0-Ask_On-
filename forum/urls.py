@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^search/$', views.search, name='search'),
     url(r'^profile/(?P<idx>[0-9]+)/$', views.profile, name='profile'),
     url(r'^questions/(?P<pk>[0-9]+)/$', views.view_question, name='view_question'),
-    url(r'^questions/(?P<abc>[0-9]+)/add_answer/', views.add_answer, name='add_answer'),
+    url(r'^questions/(?P<abc>[0-9]+)/add_answer/$', views.add_answer, name='add_answer'),
+    url(r'^questions/(?P<abc>[0-9]+)/favourite/$', views.favourite, name='favourite'),
     url(r'^feed/$', views.feed, name='feed'),
 ]

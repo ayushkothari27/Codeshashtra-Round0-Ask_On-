@@ -6,7 +6,7 @@ from django.urls import reverse
 from .forms import UserForm, UserProfileForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import UserProfile, Question, Answer
+from .models import UserProfile, Question, Answer, Favorite
 
 
 def login(request):
@@ -33,7 +33,7 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
-    return redirect(reverse('login'))
+    return redirect(reverse('forum:login'))
 
 
 def register(request):
@@ -62,7 +62,7 @@ def register(request):
             profile.user = user
             profile.save()
             auth_login(request, user)
-            return redirect("profile", idx=profile.id)
+            return redirect('forum:profile', idx=profile.id)
         # Invalid form or forms - mistakes or something else?
         # Print problems to the terminal.
         # They'll also be shown to the user.
@@ -109,18 +109,13 @@ def view_question(request, pk):
 
 @login_required(login_url='forum:login')
 def add_answer(request, abc):
-    print(13)
     if request.method == 'POST':
-        print(1)
         ans = request.POST.get('answer', '')
         ques = Question.objects.get(id=abc)
         # if ques:
         user = request.user
-        print(2)
         profile = user.user_profile
-        print(ans)
         answer = Answer.objects.create(answered_by=profile, ques=ques, answer=ans)
-        print(answer.answer)
         answer.save()
         return redirect('forum:view_question', pk=abc)
         # else:
@@ -134,3 +129,22 @@ def feed(request):
     ques = Question.objects.all()
 
     return render(request, 'forum/feed.html', {'ques': ques})
+
+
+@login_required(login_url='forum:login')
+def favourite(request, abc):
+    if request.method == 'POST':
+        ques = Question.objects.get(id=abc)
+        # if ques:
+        user = request.user
+        profile = user.user_profile
+        favourite = Favorite.objects.filter(user=profile, question=ques)
+        if favourite.exists():
+            return redirect('forum:view_question', pk=abc)
+        favourite = Favorite.objects.create(user=profile, question=ques)
+        favourite.save()
+        return redirect('forum:view_question', pk=abc)
+        # else:
+        #     return redirect('forum:login')
+    ques = get_object_or_404(Question, pk=abc)
+    return render(request, 'forum/view_question.html', {'question': ques})
