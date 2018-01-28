@@ -6,7 +6,7 @@ from django.urls import reverse
 from .forms import UserForm, UserProfileForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import UserProfile, Question, Answer, AnswerComment, Vote
+from .models import UserProfile, Question, Answer, AnswerComment, Vote, Favorite, Domain
 from django.http import HttpResponse
 from django import forms
 
@@ -35,7 +35,7 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
-    return redirect(reverse('login'))
+    return redirect(reverse('forum:login'))
 
 
 def register(request):
@@ -64,7 +64,7 @@ def register(request):
             profile.user = user
             profile.save()
             auth_login(request, user)
-            return redirect("profile", idx=profile.id)
+            return redirect('forum:profile', idx=profile.id)
         # Invalid form or forms - mistakes or something else?
         # Print problems to the terminal.
         # They'll also be shown to the user.
@@ -87,23 +87,29 @@ def register(request):
                   {'user_form': user_form, 'profile_form': profile_form})
 
 
-@login_required(login_url='/login/')
+@login_required(login_url='forum:login')
 def profile(request, idx):
     client = get_object_or_404(UserProfile, pk=idx)
 
     return render(request, 'forum/user_profile.html', {'client': client})
 
 
-@login_required(login_url='/login')
+@login_required(login_url='forum:login')
 def add_question(request):
     if request.method == 'POST':
         word = request.POST.get('word', '')
         domain = request.POST.get('domain', '')
-        all_questions = Question()
-        all_questions.question = word
-        all_questions.question = domain
-        all_questions.save()
-        return render(request, 'forum/feed.html')
+        domain2 = Domain.objects.get(name=domain)
+        domain = Domain.objects.filter(name=domain)
+        if domain:
+            all_questions = Question()
+            all_questions.question = word
+            all_questions.domain = domain2
+            all_questions.save()
+            return render(request, 'forum/feed.html')
+        else:
+            error_message = 'No such Domain names exist!'
+            return render(request, 'forum/add_question.html', {'error': error_message})
 
     if request.method == 'GET':
         return render(request, 'forum/add_question.html')
@@ -141,7 +147,7 @@ def add_answer(request, abc):
     return render(request, 'forum/view_question.html', {'question': ques})
 
 
-@login_required(login_url='/login/')
+@login_required(login_url='forum:login')
 def feed(request):
     ques = Question.objects.all()
 
@@ -149,6 +155,24 @@ def feed(request):
 
 
 @login_required(login_url='forum:login')
+def favourite(request, abc):
+    if request.method == 'POST':
+        ques = Question.objects.get(id=abc)
+        # if ques:
+        user = request.user
+        profile = user.user_profile
+        favourite = Favorite.objects.filter(user=profile, question=ques)
+        if favourite.exists():
+            return redirect('forum:view_question', pk=abc)
+        favourite = Favorite.objects.create(user=profile, question=ques)
+        favourite.save()
+        return redirect('forum:view_question', pk=abc)
+        # else:
+        #     return redirect('forum:login')
+    ques = get_object_or_404(Question, pk=abc)
+    return render(request, 'forum/view_question.html', {'question': ques})
+
+
 def add_comment(request, pk):
     if request.method == 'POST':
         answer = Answer.objects.get(id=pk)
