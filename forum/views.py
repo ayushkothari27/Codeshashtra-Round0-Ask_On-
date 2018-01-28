@@ -195,3 +195,9 @@ def vote(request, pk):
         v.save()
         return redirect('forum:view_question', pk=ques.id)
     return redirect('forum:view_question', pk=ques.id)
+
+
+@login_required(login_url='forum:login')
+def thesaurus(request):
+    words = request.user.user_profile.favorites.all()
+    return render(request, 'forum/mythesaurus.html', {'words': words})
