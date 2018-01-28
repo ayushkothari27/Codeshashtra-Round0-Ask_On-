@@ -6,7 +6,7 @@ from django.urls import reverse
 from .forms import UserForm, UserProfileForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import UserProfile, Question, Answer, Favorite
+from .models import UserProfile, Question, Answer, Favorite, AnswerComment, Domain
 
 
 def login(request):
@@ -92,6 +92,27 @@ def profile(request, idx):
     return render(request, 'forum/user_profile.html', {'client': client})
 
 
+@login_required(login_url='/login')
+def add_question(request):
+    if request.method == 'POST':
+        word = request.POST.get('word', '')
+        domain = request.POST.get('domain', '')
+        domain2 = Domain.objects.get(name=domain)
+        domain = Domain.objects.filter(name=domain)
+        if domain:
+            all_questions = Question()
+            all_questions.question = word
+            all_questions.domain = domain2
+            all_questions.save()
+            return render(request, 'forum/feed.html')
+        else:
+            error_message = 'No such Domain names exist!'
+            return render(request, 'forum/add_question.html', {'error': error_message})
+
+    if request.method == 'GET':
+        return render(request, 'forum/add_question.html')
+
+
 def search(request):
     if request.GET.get('search'):
         param = request.GET.get('search')
@@ -148,3 +169,14 @@ def favourite(request, abc):
         #     return redirect('forum:login')
     ques = get_object_or_404(Question, pk=abc)
     return render(request, 'forum/view_question.html', {'question': ques})
+
+
+def add_comment(request, pk):
+    if request.method == 'POST':
+        answer = Answer.objects.get(id=pk)
+        ques = answer.ques
+        param = request.POST.get("comment", '')
+        ans_comment = AnswerComment(comment_by=request.user.user_profile, ans=answer, comment=param)
+        ans_comment.save()
+        return redirect('forum:view_question', pk=ques.id)
+    return render(request, 'forum/add_comment.html', {})

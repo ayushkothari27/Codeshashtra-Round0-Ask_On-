@@ -8,6 +8,10 @@
 
 {% for answer in question.question_ans.all %}
   <p>{{ answer.answer }}</p>
+  {% for comment in answer.comments.all %}
+    <p>{{ comment.comment }}</p>
+  {% endfor %}
+  <a href="{% url 'forum:add_comment' answer.id %}">Add comment</a>
 {% endfor %}
 <h1>Add answer</h1>
 <form action="{% url 'forum:add_answer' question.id %}" method="post">
