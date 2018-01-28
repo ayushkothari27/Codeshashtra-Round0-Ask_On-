@@ -85,14 +85,14 @@ def register(request):
                   {'user_form': user_form, 'profile_form': profile_form})
 
 
-@login_required(login_url='/login/')
+@login_required(login_url='forum:login')
 def profile(request, idx):
     client = get_object_or_404(UserProfile, pk=idx)
 
     return render(request, 'forum/user_profile.html', {'client': client})
 
 
-@login_required(login_url='/login')
+@login_required(login_url='forum:login')
 def add_question(request):
     if request.method == 'POST':
         word = request.POST.get('word', '')
@@ -145,7 +145,7 @@ def add_answer(request, abc):
     return render(request, 'forum/view_question.html', {'question': ques})
 
 
-@login_required(login_url='/login/')
+@login_required(login_url='forum:login')
 def feed(request):
     ques = Question.objects.all()
 
