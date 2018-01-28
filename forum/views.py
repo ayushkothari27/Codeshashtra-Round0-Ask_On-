@@ -100,3 +100,13 @@ def search(request):
             return render(request, 'form/search.html', {'error': 'NO MATCHING QUESTIONS FOUND'})
         return render(request, 'forum/search.html', {'questions': questions})
     return render(request, 'forum/search.html', {})
+
+
+def view_question(request, pk):
+    question = get_object_or_404(Question, pk=pk)
+    return render(request, 'forum/view_question.html', {'question': question})
+
+
+# def add_answer(request, pk):
+#     if request.method == 'POST':
+#         ans = request.POST.get('answer')
