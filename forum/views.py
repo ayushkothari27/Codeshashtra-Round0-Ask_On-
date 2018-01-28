@@ -3,6 +3,9 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.urls import reverse
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import UserProfile
 
 
 def login(request):
@@ -30,3 +33,13 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect(reverse('login'))
+
+
+@login_required(login_url='/login/')
+def profile(request, idx):
+    client = get_object_or_404(UserProfile, pk=idx)
+
+    return render(request, 'forum/user_profile.html', {'client': client})
+
+
+
