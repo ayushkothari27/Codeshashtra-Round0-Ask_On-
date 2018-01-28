@@ -7,9 +7,12 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     photo = models.FileField(blank=True)
     reputation = models.PositiveIntegerField(default=0)
-    description = models.CharField(max_length=250)
+    description = models.CharField(max_length=250, blank=True)
     domains = models.ManyToManyField("Domain", blank=True)
     words = models.ManyToManyField("Question", blank=True)
+
+    def __str__(self):
+        return self.user.username
 
 
 class Question(models.Model):
@@ -22,6 +25,9 @@ class Question(models.Model):
                                null=True, blank=True, on_delete=models.SET_NULL)
     time = models.DateTimeField(default=datetime.now, blank=True)
 
+    def __str__(self):
+        return self.question
+
 
 class Answer(models.Model):
     answered_by = models.ForeignKey(UserProfile, related_name="answers",
@@ -31,6 +37,9 @@ class Answer(models.Model):
     upvotes = models.IntegerField(default=0)
     reports = models.PositiveIntegerField(default=0)
     time = models.DateTimeField(default=datetime.now, blank=True)
+
+    def __str__(self):
+        return self.answer
 
 
 class AnswerComment(models.Model):
@@ -43,6 +52,9 @@ class AnswerComment(models.Model):
     reports = models.PositiveIntegerField(default=0)
     time = models.DateTimeField(default=datetime.now, blank=True)
 
+    def __str__(self):
+        return self.comment
+
 
 class QuestionComment(models.Model):
     comment_by = models.ForeignKey(UserProfile, related_name="comment_question",
@@ -53,6 +65,12 @@ class QuestionComment(models.Model):
     reports = models.PositiveIntegerField(default=0)
     time = models.DateTimeField(default=datetime.now, blank=True)
 
+    def __str__(self):
+        return self.comment
+
 
 class Domain(models.Model):
     name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
