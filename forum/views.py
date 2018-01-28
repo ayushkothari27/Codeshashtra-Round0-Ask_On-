@@ -4,6 +4,9 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.urls import reverse
 from .forms import UserForm, UserProfileForm
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import UserProfile
 
 
 def login(request):
@@ -36,7 +39,6 @@ def logout(request):
 def register(request):
     # A boolean value for telling the template whether the registration was successful.
     # Set to False initially. Code changes value to True when registration succeeds.
-    registered = False
     # If it's a HTTP POST, we're interested in processing form data.
     if request.method == 'POST':
         # Attempt to grab information from the raw form information.
@@ -59,9 +61,8 @@ def register(request):
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
-            registered = True
-
-            return redirect("profile")
+            auth_login(request, user)
+            return redirect("profile", idx=profile.id)
         # Invalid form or forms - mistakes or something else?
         # Print problems to the terminal.
         # They'll also be shown to the user.
@@ -69,7 +70,7 @@ def register(request):
             error = "Error in registering"
             return render(request,
                           'forum/register.html',
-                          {'user_form': user_form, 'profile_form': profile_form, 'registered': registered,
+                          {'user_form': user_form, 'profile_form': profile_form,
                            'error': error})
 
     # Not a HTTP POST, so we render our form using two ModelForm instances.
@@ -81,4 +82,11 @@ def register(request):
     # Render the template depending on the context.
     return render(request,
                   'forum/register.html',
-                  {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+                  {'user_form': user_form, 'profile_form': profile_form})
+
+
+@login_required(login_url='/login/')
+def profile(request, idx):
+    client = get_object_or_404(UserProfile, pk=idx)
+
+    return render(request, 'forum/user_profile.html', {'client': client})
