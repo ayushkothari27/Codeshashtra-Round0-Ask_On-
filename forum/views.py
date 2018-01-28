@@ -7,7 +7,6 @@ from .forms import UserForm, UserProfileForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile, Question
-from django import forms
 
 
 def login(request):
@@ -91,20 +90,6 @@ def profile(request, idx):
     client = get_object_or_404(UserProfile, pk=idx)
 
     return render(request, 'forum/user_profile.html', {'client': client})
-
-@login_required(login_url='/login')
-def add_question(request):
-    if request.method == 'POST':
-        word = request.POST.get('word', '')
-        domain = request.POST.get('domain', '')
-        all_questions = Question()
-        all_questions.question = word
-        all_questions.question = domain
-        all_questions.save()
-        return render(request, 'forum/feed.html')
-
-    if request.method == 'GET':
-        return render(request, 'forum/add_question.html')
 
 
 def search(request):
