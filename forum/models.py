@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth import User
+from django.contrib.auth.models import User
 from datetime import datetime
 
 
@@ -8,8 +8,8 @@ class UserProfile(models.Model):
     photo = models.FileField(blank=True)
     reputation = models.PositiveIntegerField(default=0)
     description = models.CharField(max_length=250)
-    domains = models.ManyToManyField("Domain", null=True, blank=True, on_delete=models.SET_NULL)
-    words = models.ManyToManyField("Question", null=True, blank=True)
+    domains = models.ManyToManyField("Domain", blank=True)
+    words = models.ManyToManyField("Question", blank=True)
 
 
 class Question(models.Model):
@@ -24,8 +24,9 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    answered_by = models.ForeignKey(UserProfile, related_name="answers")
-    ques = models.ForeignKey(Question, related_name="question", null=True, blank=True, on_delete=models.CASCADE)
+    answered_by = models.ForeignKey(UserProfile, related_name="answers",
+                                    null=True, blank=True, on_delete=models.SET_NULL)
+    ques = models.ForeignKey(Question, related_name="question_ans", null=True, blank=True, on_delete=models.CASCADE)
     answer = models.CharField(max_length=500)
     upvotes = models.IntegerField(default=0)
     reports = models.PositiveIntegerField(default=0)
@@ -33,7 +34,8 @@ class Answer(models.Model):
 
 
 class AnswerComment(models.Model):
-    comment_by = models.ForeignKey(UserProfile, related_name="comment")
+    comment_by = models.ForeignKey(UserProfile, related_name="comment_answer",
+                                   null=True, blank=True, on_delete=models.SET_NULL)
     ans = models.ForeignKey(Answer, related_name="comments",
                             null=True, blank=True, on_delete=models.CASCADE)
     comment = models.CharField(max_length=500)
@@ -43,7 +45,7 @@ class AnswerComment(models.Model):
 
 
 class QuestionComment(models.Model):
-    comment_by = models.ForeignKey(UserProfile, related_name="comment",
+    comment_by = models.ForeignKey(UserProfile, related_name="comment_question",
                                    null=True, blank=True, on_delete=models.SET_NULL)
     question = models.ForeignKey(Question, related_name="comments", on_delete=models.CASCADE)
     comment = models.CharField(max_length=500)
