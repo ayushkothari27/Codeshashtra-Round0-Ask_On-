@@ -6,7 +6,8 @@ from django.urls import reverse
 from .forms import UserForm, UserProfileForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import UserProfile, Question
+from .models import UserProfile, Question, Answer
+from django.http import HttpResponse
 
 
 def login(request):
@@ -107,6 +108,23 @@ def view_question(request, pk):
     return render(request, 'forum/view_question.html', {'question': question})
 
 
-# def add_answer(request, pk):
-#     if request.method == 'POST':
-#         ans = request.POST.get('answer')
+@login_required(login_url='forum:login')
+def add_answer(request, abc):
+    print(13)
+    if request.method == 'POST':
+        print(1)
+        ans = request.POST.get('answer', '')
+        ques = Question.objects.get(id=abc)
+        # if ques:
+        user = request.user
+        print(2)
+        profile = user.user_profile
+        print(ans)
+        answer = Answer.objects.create(answered_by=profile, ques=ques, answer=ans)
+        print(answer.answer)
+        answer.save()
+        return redirect('forum:view_question', pk=abc)
+        # else:
+        #     return redirect('forum:login')
+    ques = get_object_or_404(Question, pk=abc)
+    return render(request, 'forum/view_question.html', {'question': ques})

@@ -1,2 +1,13 @@
 <h1>{{ question.question }}</h1>
 <p>{{ question.id }}</p>
+
+
+{% for answer in question.question_ans.all %}
+  <p>{{ answer.answer }}</p>
+{% endfor %}
+<h1>Add answer</h1>
+<form action="{% url 'forum:add_answer' question.id %}" method="post">
+  {% csrf_token %}
+  Answer <input type="text" name="answer"><br>
+  <input type="submit" value="Submit Answer"><br>
+</form>
