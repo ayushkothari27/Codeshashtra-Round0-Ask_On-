@@ -5,4 +5,8 @@ __pycache__/
 media/
 *env
 db.sqlite3
+<<<<<<< HEAD
 .flake8
+=======
+.idea
+>>>>>>> 6b7e7fc99858dc8e611bf1501f2f288936c0755c
