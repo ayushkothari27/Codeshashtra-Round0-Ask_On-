@@ -100,3 +100,10 @@ def search(request):
             return render(request, 'form/search.html', {'error': 'NO MATCHING QUESTIONS FOUND'})
         return render(request, 'forum/search.html', {'questions': questions})
     return render(request, 'forum/search.html', {})
+
+
+@login_required(login_url='/login/')
+def feed(request):
+    ques = Question.objects.all()
+
+    return render(request, 'forum/feed.html', {'ques': ques})
