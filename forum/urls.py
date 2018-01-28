@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^profile/(?P<idx>[0-9]+)/$', views.profile, name='profile'),
     url(r'^questions/(?P<pk>[0-9]+)/$', views.view_question, name='view_question'),
     url(r'^questions/(?P<abc>[0-9]+)/add_answer/', views.add_answer, name='add_answer'),
+    url(r'^feed/$', views.feed, name='feed'),
 ]

@@ -6,8 +6,13 @@ from django.urls import reverse
 from .forms import UserForm, UserProfileForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
+<<<<<<< HEAD
 from .models import UserProfile, Question, Answer
 from django.http import HttpResponse
+=======
+from .models import UserProfile, Question
+from django import forms
+>>>>>>> c81d7bb569ea2eedd7b7ef8ba88f7bff1b9a515c
 
 
 def login(request):
@@ -92,6 +97,20 @@ def profile(request, idx):
 
     return render(request, 'forum/user_profile.html', {'client': client})
 
+@login_required(login_url='/login')
+def add_question(request):
+    if request.method == 'POST':
+        word = request.POST.get('word', '')
+        domain = request.POST.get('domain', '')
+        all_questions = Question()
+        all_questions.question = word
+        all_questions.question = domain
+        all_questions.save()
+        return render(request, 'forum/feed.html')
+
+    if request.method == 'GET':
+        return render(request, 'forum/add_question.html')
+
 
 def search(request):
     if request.GET.get('search'):
@@ -128,3 +147,10 @@ def add_answer(request, abc):
         #     return redirect('forum:login')
     ques = get_object_or_404(Question, pk=abc)
     return render(request, 'forum/view_question.html', {'question': ques})
+
+
+@login_required(login_url='/login/')
+def feed(request):
+    ques = Question.objects.all()
+
+    return render(request, 'forum/feed.html', {'ques': ques})
