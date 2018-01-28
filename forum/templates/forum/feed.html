@@ -1,9 +1,323 @@
-<h1>Ask ON</h1>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Codeshashtra</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">-->
+</head>
+<style>
+.navbar-nav > li > a, .navbar-brand {
+    padding-top:35px !important; padding-bottom:10px !important;
+    height: 80px;
+}
+.navbar {
+    min-height:80px !important;
+}
+
+.navbar-toggle {
+    padding-top:35px !important; padding-bottom:10px !important;
+
+/*
+}
+.contain{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "jar add";
+}
+.first{
+    grid-area: jar;
+}
+.second{
+    grid-area: add;
+}
+*/
+.demo-card-wide.mdl-card {
+  width: 912px;
+}
+.demo-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 80px;
+}
+.demo-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+
+.navbar-default .navbar-toggle {
+    /* border-color: #ddd; */
+    border: none;
+    margin-top: -3px;
+}
+.dropdown.dropdown-lg .dropdown-menu {
+    margin-top: -1px;
+    padding: 6px 20px;
+}
+.input-group-btn .btn-group {
+    display: flex !important;
+}
+.btn-group .btn {
+    border-radius: 0;
+    margin-left: -1px;
+}
+.btn-group .btn:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.btn-group .form-horizontal .btn[type="submit"] {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.form-horizontal .form-group {
+    margin-left: 0;
+    margin-right: 0;
+}
+.form-group .form-control:last-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+@media screen and (min-width: 768px) {
+    #adv-search {
+        width: 500px;
+        margin: 0 auto;
+    }
+    .dropdown.dropdown-lg {
+        position: static !important;
+    }
+    .dropdown.dropdown-lg .dropdown-menu {
+        min-width: 500px;
+    }
+}
+
+.but {
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.but2 {
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+}
+
+.but2:hover {
+    background-color: #008CBA;
+    color: white;
+}
+
+#star{
+    color: grey;
+ }
+
+</style>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top" style="background-color: #fff !important;                  font-weight: 700;">
+      <div class="container-fluid" style="background-color: #fff !important">
+        <div class="navbar-header" style="background-color: #fff !important">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar" style="color: black"></span>
+            <span class="icon-bar" style="color: black"></span>
+            <span class="icon-bar" style="color: black"></span>
+<!--            <i class="fa fa-bars" aria-hidden="true"></i>-->
+          </button>
+
+          <a class="navbar-brand" href="#" style="font-weight: 900;font-size: 30px;padding: 30px;">Ask-ON</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li class="active" style="font-weight: 700;font-size: 20px;"><a href="index.html">Feed</a></li>
+<!--
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Page 1-1</a></li>
+                <li><a href="#">Page 1-2</a></li>
+                <li><a href="#">Page 1-3</a></li>
+              </ul>
+            </li>
+-->
+            <li><a href="mythesaurus.html" style="font-weight: 700;font-size: 20px;padding: 25px;">My Thesaurus</a></li>
+            <li><a href="wordofday.html" style="font-weight: 700;font-size: 20px;padding: 25px;">Word of the day</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+<!--            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>-->
+            <li><a href="signup.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+<!--            <button class="but but2" style=""><span class="glyphicon glyphicon-log-in"></span> Login</button>-->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <div class="container" style="margin-top: 120px;">
+    <div class="row">
+        <div class="col-xs-8 col-xs-offset-2">
+		    <div class="input-group">
+                <div class="input-group-btn search-panel">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    	<span id="search_concept">Filter by</span> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#contains">Contains</a></li>
+                      <li><a href="#its_equal">Science</a></li>
+                      <li><a href="#greather_than">Politics</a></li>
+                      <li><a href="#less_than"></a></li>
+                      <li class="divider"></li>
+                      <li><a href="#all">All jargons</a></li>
+                    </ul>
+                </div>
+                <input type="hidden" name="search_param" value="all" id="search_param">
+                <input type="text" class="form-control" name="x" placeholder="Search term...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+        </div>
+	</div>
+</div>
+
+<!--
+    <div class="container">
+        <div class="row" class="col-sm-8">
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp first">
+
+            <div class="mdl-card__title">
+                    <h2 class="mdl-card__title-text">Welcome</h2>
+                </div>
+            <div class="mdl-card__supporting-text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Mauris sagittis pellentesque lacus eleifend lacinia...
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                  Get Started
+                </a>
+            </div>
+            <div class="mdl-card__menu">
+                <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                  <i class="material-icons">share</i>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+        <div class="demo-card-square mdl-card mdl-shadow--2dp second">
+            <div class="mdl-card__title mdl-card--expand">
+                <h2 class="mdl-card__title-text">Update</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Aenan convallis.
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                  View Updates
+                </a>
+            </div>
+        </div>
+        </div>
+        </div>
+    </div>
+-->
+
+
+    <div class="container">
+<a href ="{% url 'forum:add_question' %}">Add Question</a>
+<br>
+<a href ="{% url 'forum:search' %}">Search</a>
 
 
 {% for q in ques %}
-    <h3>Jargon : {{ q.question }}</h3>
-    <h4>Domain : {{ q.domain }}</h4>
-    <h6>Asked On : {{ q.time }}</h6>
-    <br>
-{% endfor %}
+    <div class="row">
+
+    <div class="col-sm-8" >
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp first" style="width: 100%;">
+
+            <div class="mdl-card__title">
+                    <h2 class="mdl-card__title-text">Jargon : {{ q.question }} </h2>
+                </div>
+            <div class="mdl-card__supporting-text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Mauris sagittis pellentesque lacus eleifend lacinia...
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="jargon.html" style="text-decoration-line: none;color:#008CBA;">
+                  View more
+                </a>
+            </div>
+
+            <div class="mdl-card__menu">
+<!--
+                <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" style="width: auto;">
+                    <i class="material-icons">note_add</i>
+                </button>
+-->
+                <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="jargon.html" style="text-decoration-line: none;color:#008CBA;">
+                  Add answer
+                </a>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 hidden-xs" >
+        <div class="demo-card-square mdl-card mdl-shadow--2dp second">
+            <div class="mdl-card__title mdl-card--expand">
+                <h2 class="mdl-card__title-text">Most popular</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Aenan convallis.
+            </div>
+<!--
+            <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                  View Updates
+                </a>
+            </div>
+-->
+            <span class="mdl-chip mdl-chip--deletable" style="width: 100px;">
+                <span class="mdl-chip__text">Science</span>
+                <button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+            </span>
+        </div>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+<script>
+
+$(document).ready(function(e){
+    $('.search-panel .dropdown-menu').find('a').click(function(e) {
+		e.preventDefault();
+		var param = $(this).attr("href").replace("#","");
+		var concept = $(this).text();
+		$('.search-panel span#search_concept').text(concept);
+		$('.input-group #search_param').val(param);
+	});
+});
+
+
+</script>
+
+
+    <script src="js/search.js"></script>
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -20,7 +20,7 @@ def login(request):
             if user:
                 if user.is_active:
                     auth_login(request, user)
-                    return render(request, 'forum/feed.html', {})
+                    return redirect('forum:feed')
                 else:
                     error = 'Your account is disabled.'
                     return render(request, 'forum/login.html', {'error': error})
@@ -69,7 +69,7 @@ def register(request):
         else:
             error = "Error in registering"
             return render(request,
-                          'forum/register.html',
+                          'forum/login.html',
                           {'user_form': user_form, 'profile_form': profile_form,
                            'error': error})
 
@@ -81,7 +81,7 @@ def register(request):
 
     # Render the template depending on the context.
     return render(request,
-                  'forum/register.html',
+                  'forum/login.html',
                   {'user_form': user_form, 'profile_form': profile_form})
 
 
@@ -99,12 +99,13 @@ def add_question(request):
         domain = request.POST.get('domain', '')
         domain2 = Domain.objects.get(name=domain)
         domain = Domain.objects.filter(name=domain)
-        if domain:
+        if domain.exists():
+            print(5)
             all_questions = Question()
             all_questions.question = word
             all_questions.domain = domain2
             all_questions.save()
-            return render(request, 'forum/feed.html')
+            return redirect('forum:feed')
         else:
             error_message = 'No such Domain names exist!'
             return render(request, 'forum/add_question.html', {'error': error_message})
@@ -145,9 +146,10 @@ def add_answer(request, abc):
     return render(request, 'forum/view_question.html', {'question': ques})
 
 
-@login_required(login_url='forum:login')
 def feed(request):
     ques = Question.objects.all()
+    if request.user.is_authenticated:
+        ques = request.user.user_profile.questions.all()
 
     return render(request, 'forum/feed.html', {'ques': ques})
 
