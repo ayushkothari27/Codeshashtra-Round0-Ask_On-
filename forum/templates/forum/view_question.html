@@ -4,6 +4,11 @@
 
 {% for answer in question.question_ans.all %}
   <p>{{ answer.answer }}</p>
+  <p>{{ answer.answer_votes.count }}</p>
+  <form action="{% url 'forum:vote' answer.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Vote"><br>
+  </form>
   {% for comment in answer.comments.all %}
     <p>{{ comment.comment }}</p>
   {% endfor %}

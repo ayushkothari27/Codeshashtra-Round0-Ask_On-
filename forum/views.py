@@ -6,7 +6,7 @@ from django.urls import reverse
 from .forms import UserForm, UserProfileForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import UserProfile, Question, Answer, AnswerComment
+from .models import UserProfile, Question, Answer, AnswerComment, Vote
 from django.http import HttpResponse
 from django import forms
 
@@ -158,3 +158,16 @@ def add_comment(request, pk):
         ans_comment.save()
         return redirect('forum:view_question', pk=ques.id)
     return render(request, 'forum/add_comment.html', {})
+
+
+@login_required(login_url='forum:login')
+def vote(request, pk):
+    answer = Answer.objects.get(id=pk)
+    ques = answer.ques
+    if request.method == 'POST':
+        if Vote.objects.filter(user=request.user.user_profile, answer=answer):
+            return redirect('forum:view_question', pk=ques.id)
+        v = Vote(user=request.user.user_profile, answer=answer)
+        v.save()
+        return redirect('forum:view_question', pk=ques.id)
+    return redirect('forum:view_question', pk=ques.id)
