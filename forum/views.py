@@ -102,6 +102,11 @@ def search(request):
     return render(request, 'forum/search.html', {})
 
 
+def view_question(request, pk):
+    question = get_object_or_404(Question, pk=pk)
+    return render(request, 'forum/view_question.html', {'question': question})
+
+
 @login_required(login_url='/login/')
 def feed(request):
     ques = Question.objects.all()

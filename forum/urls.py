@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^search/$', views.search, name='search'),
     url(r'^profile/(?P<idx>[0-9]+)/', views.profile, name='profile'),
     url(r'^feed/$', views.feed, name='feed'),
+    url(r'^questions/(?P<pk>[0-9]+)/', views.view_question, name='view_question'),
 ]
