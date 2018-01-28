@@ -6,13 +6,9 @@ from django.urls import reverse
 from .forms import UserForm, UserProfileForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
-<<<<<<< HEAD
-from .models import UserProfile, Question, Answer
+from .models import UserProfile, Question, Answer, AnswerComment
 from django.http import HttpResponse
-=======
-from .models import UserProfile, Question
 from django import forms
->>>>>>> c81d7bb569ea2eedd7b7ef8ba88f7bff1b9a515c
 
 
 def login(request):
@@ -97,6 +93,7 @@ def profile(request, idx):
 
     return render(request, 'forum/user_profile.html', {'client': client})
 
+
 @login_required(login_url='/login')
 def add_question(request):
     if request.method == 'POST':
@@ -129,18 +126,13 @@ def view_question(request, pk):
 
 @login_required(login_url='forum:login')
 def add_answer(request, abc):
-    print(13)
     if request.method == 'POST':
-        print(1)
         ans = request.POST.get('answer', '')
         ques = Question.objects.get(id=abc)
         # if ques:
         user = request.user
-        print(2)
         profile = user.user_profile
-        print(ans)
         answer = Answer.objects.create(answered_by=profile, ques=ques, answer=ans)
-        print(answer.answer)
         answer.save()
         return redirect('forum:view_question', pk=abc)
         # else:
@@ -154,3 +146,15 @@ def feed(request):
     ques = Question.objects.all()
 
     return render(request, 'forum/feed.html', {'ques': ques})
+
+
+@login_required(login_url='forum:login')
+def add_comment(request, pk):
+    if request.method == 'POST':
+        answer = Answer.objects.get(id=pk)
+        ques = answer.ques
+        param = request.POST.get("comment", '')
+        ans_comment = AnswerComment(comment_by=request.user.user_profile, ans=answer, comment=param)
+        ans_comment.save()
+        return redirect('forum:view_question', pk=ques.id)
+    return render(request, 'forum/add_comment.html', {})
