@@ -5,3 +5,4 @@ __pycache__/
 media/
 *env
 db.sqlite3
+.flake8
