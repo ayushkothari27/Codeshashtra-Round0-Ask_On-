@@ -7,8 +7,8 @@ urlpatterns = [
     url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', views.logout, name='logout'),
     url(r'^search/$', views.search, name='search'),
-    url(r'^profile/(?P<idx>[0-9]+)/', views.profile, name='profile'),
-    url(r'^question/add/', views.add_question, name='add_question'),
+    url(r'^profile/(?P<idx>[0-9]+)/$', views.profile, name='profile'),
+    url(r'^questions/(?P<pk>[0-9]+)/$', views.view_question, name='view_question'),
+    url(r'^questions/(?P<abc>[0-9]+)/add_answer/', views.add_answer, name='add_answer'),
     url(r'^feed/$', views.feed, name='feed'),
-    url(r'^questions/(?P<pk>[0-9]+)/', views.view_question, name='view_question'),
 ]

@@ -4,12 +4,11 @@ from datetime import datetime
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user_profile")
     photo = models.FileField(blank=True)
     reputation = models.PositiveIntegerField(default=0)
     description = models.CharField(max_length=250, blank=True)
     domains = models.ManyToManyField("Domain", blank=True)
-    words = models.ManyToManyField("Question", blank=True)
 
     def __str__(self):
         return self.user.username
@@ -74,3 +73,8 @@ class Domain(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Favorite(models.Model):
+    user = models.ForeignKey(UserProfile, related_name="favorites", on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, related_name="question_favorites", on_delete=models.CASCADE)
