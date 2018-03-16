@@ -33,7 +33,6 @@ class Answer(models.Model):
                                     null=True, blank=True, on_delete=models.SET_NULL)
     ques = models.ForeignKey(Question, related_name="question_ans", null=True, blank=True, on_delete=models.CASCADE)
     answer = models.CharField(max_length=500)
-    upvotes = models.IntegerField(default=0)
     reports = models.PositiveIntegerField(default=0)
     time = models.DateTimeField(default=datetime.now, blank=True)
 
@@ -78,3 +77,8 @@ class Domain(models.Model):
 class Favorite(models.Model):
     user = models.ForeignKey(UserProfile, related_name="favorites", on_delete=models.CASCADE)
     question = models.ForeignKey(Question, related_name="question_favorites", on_delete=models.CASCADE)
+
+
+class Vote(models.Model):
+    user = models.ForeignKey(UserProfile, related_name="votes", on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, related_name="answer_votes", on_delete=models.CASCADE)

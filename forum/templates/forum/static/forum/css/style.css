@@ -1,0 +1,109 @@
+.navbar-nav > li > a, .navbar-brand {
+    padding-top:35px !important; padding-bottom:10px !important;
+    height: 80px;
+}
+.navbar {
+    min-height:80px !important;
+}
+
+.navbar-toggle {
+    padding-top:35px !important; padding-bottom:10px !important;
+   
+/*
+}
+.contain{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "jar add";
+}
+.first{
+    grid-area: jar;
+}
+.second{
+    grid-area: add;
+}
+*/
+.demo-card-wide.mdl-card {
+  width: 912px;
+}
+.demo-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 80px;
+}
+.demo-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+
+.navbar-default .navbar-toggle {
+    /* border-color: #ddd; */
+    border: none;
+    margin-top: -3px;
+}
+.dropdown.dropdown-lg .dropdown-menu {
+    margin-top: -1px;
+    padding: 6px 20px;
+}
+.input-group-btn .btn-group {
+    display: flex !important;
+}
+.btn-group .btn {
+    border-radius: 0;
+    margin-left: -1px;
+}
+.btn-group .btn:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.btn-group .form-horizontal .btn[type="submit"] {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.form-horizontal .form-group {
+    margin-left: 0;
+    margin-right: 0;
+}
+.form-group .form-control:last-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+@media screen and (min-width: 768px) {
+    #adv-search {
+        width: 500px;
+        margin: 0 auto;
+    }
+    .dropdown.dropdown-lg {
+        position: static !important;
+    }
+    .dropdown.dropdown-lg .dropdown-menu {
+        min-width: 500px;
+    }
+}
+    
+.but {
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+    
+.but2 {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #008CBA;
+}
+
+.but2:hover {
+    background-color: #008CBA;
+    color: white;
+}
+    
+#star{
+    color: grey;
+ }

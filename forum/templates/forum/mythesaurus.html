@@ -1,0 +1,7 @@
+{% if words %}
+  {% for word in words %}
+    <h1>{{word.question}}</h1>
+  {% endfor %}
+{% else %}
+  <h1> No favourites yet!! </h1>
+{% endif %}

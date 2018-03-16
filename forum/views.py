@@ -6,12 +6,18 @@ from django.urls import reverse
 from .forms import UserForm, UserProfileForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import UserProfile, Question, Answer, Favorite, AnswerComment, Domain
+from .models import UserProfile, Question, Answer, AnswerComment, Vote, Favorite, Domain
+from django.http import HttpResponse
+from django import forms
+import random
+from django.views.generic import View, TemplateView
+from django.views import generic
+import requests
 
 
 def login(request):
     if request.user.is_authenticated:
-            return render(request, 'forum/feed.html', {})
+            return redirect('forum:feed')
     else:
         if request.method == 'POST':
             username = request.POST.get('username', '')
@@ -100,8 +106,8 @@ def add_question(request):
         domain2 = Domain.objects.get(name=domain)
         domain = Domain.objects.filter(name=domain)
         if domain.exists():
-            print(5)
             all_questions = Question()
+            all_questions.asked_by = request.user.user_profile
             all_questions.question = word
             all_questions.domain = domain2
             all_questions.save()
@@ -182,3 +188,50 @@ def add_comment(request, pk):
         ans_comment.save()
         return redirect('forum:view_question', pk=ques.id)
     return render(request, 'forum/add_comment.html', {})
+
+
+@login_required(login_url='forum:login')
+def vote(request, pk):
+    answer = Answer.objects.get(id=pk)
+    ques = answer.ques
+    if request.method == 'POST':
+        if Vote.objects.filter(user=request.user.user_profile, answer=answer):
+            return redirect('forum:view_question', pk=ques.id)
+        v = Vote(user=request.user.user_profile, answer=answer)
+        v.save()
+        return redirect('forum:view_question', pk=ques.id)
+    return redirect('forum:view_question', pk=ques.id)
+
+
+@login_required(login_url='forum:login')
+def thesaurus(request):
+    words = request.user.user_profile.favorites.all()
+    return render(request, 'forum/mythesaurus.html', {'words': words})
+
+
+def word_of_the_day(request):
+    words = Question.objects.all()
+    word = random.choice(words)
+    return render(request, 'forum/wordoftheday.html', {'word': word})
+
+
+class Weather(generic.TemplateView):
+    def get(self, request):
+        return render(request, 'forum/apiform.html')
+
+    def post(self, request):
+        app_id = 'a8fbbca7'
+        app_key = '46a0414020b93a7ac29a89416793e343'
+        word = request.POST.get('word', '')
+        print("HI")
+        r = requests.get('https://od-api.oxforddictionaries.com:443/api/v1/entries/en/'+word,
+                         headers={'app_id': app_id, 'app_key': app_key})
+        dictionary = r.json()
+        args = {'dictionary1': dictionary['results'][0]['lexicalEntries'][0]['entries'][0]['senses'][0]['definitions']
+                [0], 'dictionary2': dictionary['results'][0]['lexicalEntries'][0]['entries'][0]['senses'][0]['examples']
+                [0]['text'],
+                'dictionary3': dictionary['results'][0]['lexicalEntries'][0]['entries'][0]['etymologies'][0],
+                'word': word,
+                }
+
+        return render(request, 'forum/apitest.html', args)

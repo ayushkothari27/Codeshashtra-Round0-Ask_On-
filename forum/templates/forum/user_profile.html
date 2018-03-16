@@ -1,8 +1,3 @@
-<h2>{{ client.reputation }}</h2>
-<h2>{{ client.description }}</h2>
-<h2>{{ client.domains }}</h2>
-<h2>{{ client.words }}</h2>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +5,8 @@
 <style>
 .card {
  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
- max-width: 300px;
+ max-width: 800px;
+ max-height: 1000px;
  margin: auto;
  text-align: center;
  font-family: arial;
@@ -27,7 +23,7 @@ button {
  display: inline-block;
  padding: 8px;
  color: white;
- background-color: #000;
+ background-color: #008CBA;
  text-align: center;
  cursor: pointer;
  width: 100%;
@@ -37,7 +33,7 @@ button {
 a {
  text-decoration: none;
  font-size: 22px;
- color: black;
+ color: blue;
 }
 
 button:hover, a:hover {
@@ -47,16 +43,17 @@ button:hover, a:hover {
 </head>
 <body>
 
-<h2 style="text-align:center">User Profile Card</h2>
+<h2 style="text-align:center">{{ client.name }}</h2>
 
 <div class="card">
- <img src="{{ client.photo }}" alt="John" style="width:100%">
+ <img src="{{ client.photo.url }}" alt="John" style="width:100%">
  <h1><h1>{{ client.user }}</h1></h1>
- <p class="title">CEO & Founder, Example</p>
- <p>{{ client.description }}</p>
+ <p class="title">{{ client.description }}</p>
+   <p>{{ client.domains }}</p>
  <div style="margin: 24px 0;">
 </div>
-<p><button>Contact</button></p>
+
+<p><button>Reputation : {{ client.reputation }}</button></p>
 </div>
 
 </body>

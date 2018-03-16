@@ -195,7 +195,7 @@ body {
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
-            <li class="active" style="font-weight: 700;font-size: 15px;"><a href="index.html">Feed</a></li>
+            <li class="active" style="font-weight: 700;font-size: 15px;"><a href="{% url 'forum:feed' %}">Feed</a></li>
 <!--
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
@@ -268,7 +268,8 @@ body {
 									</div>
 								</form>
 								<form id="register-form" action="{% url 'forum:register' %}" method="post" role="form" style="display: none;">
-									<div class="form-group">
+                  {% csrf_token %}
+                  <div class="form-group">
 										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
 									</div>
 									<div class="form-group">

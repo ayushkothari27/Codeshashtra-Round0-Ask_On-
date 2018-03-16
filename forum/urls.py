@@ -14,4 +14,8 @@ urlpatterns = [
     url(r'^feed/$', views.feed, name='feed'),
     url(r'^answers/(?P<pk>[0-9]+)/add_comment/$', views.add_comment, name='add_comment'),
     url(r'^questions/add/$', views.add_question, name='add_question'),
+    url(r'^questions/(?P<pk>[0-9]+)/vote/$', views.vote, name='vote'),
+    url(r'^thesaurus/$', views.thesaurus, name='thesaurus'),
+    url(r'^wordoftheday/$', views.word_of_the_day, name='word_of_the_day'),
+    url(r'^dict/apicall/$', views.Weather.as_view(), name='weats'),
 ]

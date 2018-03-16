@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 
@@ -70,6 +71,7 @@
     </nav>
 
     <div class="container" style="margin-top: 110px;">
+
         <div class="row">
             <div class="col-sm-6">
                 <div class="demo-card-wide mdl-card mdl-shadow--2dp" style="width: 100% ">
@@ -158,6 +160,27 @@
 
           </div>
         </div>
+{% endfor %}
+
+<h1>{{ question.question }}</h1>
+<p>{{ question.id }}</p>
+<form action="{% url 'forum:favourite' question.id %}" method="post">
+  {% csrf_token %}
+  <input type="submit" value="Favourite"><br>
+</form>
+
+
+{% for answer in question.question_ans.all %}
+  <p>{{ answer.answer }}</p>
+  <p>{{ answer.answer_votes.count }}</p>
+  <form action="{% url 'forum:vote' answer.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Vote"><br>
+  </form>
+  {% for comment in answer.comments.all %}
+    <p>{{ comment.comment }}</p>
+  {% endfor %}
+  <a href="{% url 'forum:add_comment' answer.id %}">Add comment</a>
 {% endfor %}
 
 

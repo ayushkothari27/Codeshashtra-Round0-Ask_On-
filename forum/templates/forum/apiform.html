@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+   <head>
+       <!-- Is anyone getting tired of repeatedly entering the header over and over?? -->
+       <title>Dictionary</title>
+   </head>
+
+   <body>
+
+     <form method='POST'>
+     {% csrf_token %}
+
+     <div style="margin: auto; width: 500px; background-color: lightgrey; padding: 40px; border: 1px solid black; margin-top: 240px">
+       <h1>Ask-ON's Dictionary</h1>
+         <hr><br>
+       ENTER YOUR SEARCH TEXT:  <input type="text" name="word"><br><br>
+       <input type="submit" name="Submit" style="margin-left: 210px ">
+     </div>
+     </form>
+   {% if error %}
+     <p>{{ error }}</p>
+   {% endif %}
+   </body>
+</html>
